@@ -1,0 +1,146 @@
+@font-face {
+  font-family: 'themify';
+  src:  url('fonts/themify.eot?7ck9ip');
+  src:  url('fonts/themify.eot?7ck9ip#iefix') format('embedded-opentype'),
+    url('fonts/themify.ttf?7ck9ip') format('truetype'),
+    url('fonts/themify.woff?7ck9ip') format('woff'),
+    url('fonts/themify.svg?7ck9ip#themify') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="cms-"], [class*=" cms-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'themify' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cms-follower:before {
+  content: "\e900";
+}
+.cms-follow:before {
+  content: "\e90b";
+}
+.cms-lock:before {
+  content: "\e62b";
+}
+.cms-heart:before {
+  content: "\e634";
+}
+.cms-heart-broken:before {
+  content: "\e635";
+}
+.cms-thumb-up:before {
+  content: "\e670";
+}
+.cms-thumb-down:before {
+  content: "\e671";
+}
+.cms-pulse:before {
+  content: "\e680";
+}
+.cms-user:before {
+  content: "\e602";
+}
+.cms-trash:before {
+  content: "\e605";
+}
+.cms-tag:before {
+  content: "\e608";
+}
+.cms-settings:before {
+  content: "\e60f";
+}
+.cms-search:before {
+  content: "\e610";
+}
+.cms-pencil:before {
+  content: "\e61c";
+}
+.cms-pencil-alt:before {
+  content: "\e61d";
+}
+.cms-view:before {
+  content: "\e63d";
+}
+.cms-reply2:before {
+  content: "\e644";
+}
+.cms-comment:before {
+  content: "\e645";
+}
+.cms-themify-close:before {
+  content: "\e646";
+}
+.cms-themify-check:before {
+  content: "\e64c";
+}
+.cms-announcement:before {
+  content: "\e64f";
+}
+.cms-themify-view-list:before {
+  content: "\e667";
+}
+.cms-server:before {
+  content: "\e67d";
+}
+.cms-menu:before {
+  content: "\e68e";
+}
+.cms-menu-alt:before {
+  content: "\e68f";
+}
+.cms-home:before {
+  content: "\e69b";
+}
+.cms-clipboard:before {
+  content: "\e6b4";
+}
+.cms-bell:before {
+  content: "\e6b8";
+}
+.cms-themify-favicon:before {
+  content: "\e6d2";
+}
+.cms-email:before {
+  content: "\e75a";
+}
+.cms-topic:before {
+  content: "\e901";
+}
+.cms-reply:before {
+  content: "\e902";
+}
+.cms-commentCount:before {
+  content: "\e903";
+}
+.cms-login:before {
+  content: "\e904";
+}
+.cms-point:before {
+  content: "\e905";
+}
+.cms-log:before {
+  content: "\e906";
+}
+.cms-favorites:before {
+  content: "\e907";
+}
+.cms-realNameAuthentication:before {
+  content: "\e908";
+}
+.cms-quote:before {
+  content: "\e909";
+}
+.cms-user2:before {
+  content: "\e90a";
+}

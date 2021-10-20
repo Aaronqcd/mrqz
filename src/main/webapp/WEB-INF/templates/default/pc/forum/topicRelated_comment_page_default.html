@@ -1,0 +1,208 @@
+<#-- 评论列表  分页 -->
+<#-- 本样式要引入 jquery.min.js   kindeditor  layer -->
+<#--可接收参数 topicId:话题Id  commentId:评论Id  page:分页-->
+<@function topicId="${url_topicId}" commentId="${url_commentId}" page="${url_page}" >
+<#assign pageView =  topicRelated_comment_page> 
+
+<#if pageView.records?exists> 
+	
+	<div class="commentModule" >
+		<ol class="commentlist">
+			<!-- #comment-## -->
+			<#list pageView.records as comment>
+				<div class="comment" id="anchor_${comment.id}">
+					<div class="comment-author">
+						<a href="user/control/home?userName=${comment.userName}">
+						<#if comment.avatarName != null>
+							<img src="${comment.avatarPath}100x100/${comment.avatarName}" >
+						<#else>
+							<img src="${commonPath}images/min_avata.png" >
+						</#if> 
+						<cite>
+							<a href="user/control/home?userName=${comment.userName}">
+								${(comment.nickname != null && comment.nickname??) ?string(comment.nickname , comment.userName)}
+							</a>
+						</cite> 
+					</div>
+					<div class="commentTime">${comment.postTime}</div>
+					<#if comment.quoteList?? && comment.quoteList?size gt 0> 
+					<div class="quote">
+						<#assign quoteContent = ""> 
+						<#list comment.quoteList as quote>
+							<#assign quoteContent = "<div>"+quoteContent+"<span>"+"<a href='user/control/home?userName="+quote.userName+"'>"+(quote.nickname != null && quote.nickname??) ?string(quote.nickname , quote.userName)+"</a>"+"&nbsp;的评论：</span><br/>"+quote.content+"</div>"> 
+						</#list>
+						<#noescape>${quoteContent}</#noescape>
+					</div>
+					</#if> 
+					<div class="commentContent"><#noescape>${comment.content}</#noescape></div>
+					<div class="clearfix"></div>
+					<#if comment.totalReply gt 0> 
+						<div class="reply">
+							<strong class="replyCount">--- 共有 ${comment.totalReply} 条回复 --- </strong>
+			
+							<table class="reply-table">
+							    <tbody>	 
+							    	<#list comment.replyList as reply>
+							    		<tr>
+							    			<td width="30" >
+							    				<div class="author">
+							    				<a href="user/control/home?userName=${reply.userName}">
+								    				<#if reply.avatarName != null>
+														<img src="${reply.avatarPath}100x100/${reply.avatarName}" >
+													<#else>
+														<img src="${commonPath}images/min_avata.png" >
+													</#if> 
+												</a>
+												</div>
+							    			</td>
+											<td width="60" >
+												<div class="userName">
+												<a href="user/control/home?userName=${reply.userName}">
+													${(reply.nickname != null && reply.nickname??) ?string(reply.nickname , reply.userName)}
+												</a>
+												</div>
+											</td>
+											<td><span class="replyContent">${reply.content}</span></td>
+											<td width="60" ><span class="replyTime">${reply.postTime}</span></td>
+										</tr>
+							    	</#list> 
+								</tbody>
+							</table>
+						</div>
+					</#if> 
+					<div class="tipBottom">
+						<span class="a-toolbar">
+							<a href="javascript:" onclick="replyLayer('${comment.id}','${(comment.nickname != null && comment.nickname??) ?string(comment.nickname , comment.userName)}');">回复</a>&nbsp;|&nbsp;
+							<a href="javascript:" onclick="quoteLayer('${comment.id}','${(comment.nickname != null && comment.nickname??) ?string(comment.nickname , comment.userName)}')">引用</a>
+							<!-- 是否登录 -->
+							<input type="hidden" id="isLogin" value="<#if systemUser != null>true<#else>false</#if>">
+							
+							
+						</span>
+					</div>
+				</div>
+			</#list>
+		</ol>
+	</div>
+	
+</#if>	
+</@function>
+<div class="commentPage">
+   	<#-- 分页 公共页(生成新引用页)-->
+	<@include action="${newPublic_1}"/>
+</div>
+
+
+<script type="text/javascript">
+
+
+//滚动到描点(当上级跳转来后台'我的评论' '我的回复'时)
+$(function() {
+	var commentId = getUrlParam("commentId");//URL中的评论Id
+	if(commentId != null && commentId != ""){
+		var anchor = $("#anchor_" + commentId); //获得锚点   
+		
+	    if (anchor.length > 0) {//判断对象是否存在   
+	        var pos = anchor.offset().top;  
+	      //  var poshigh = anchor.height();  
+	        $("html,body").animate({ scrollTop: pos }, 500);  
+	    }
+	}
+     
+ });  
+
+
+
+//回复弹出层
+function replyLayer(commentId,userName){
+	//判断是否已登录
+	var isLogin = document.getElementById("isLogin").value;
+	if(isLogin == "false"){
+		layer.open({
+		    type: 1, 
+		    title:"提示",
+		    content: "<div style='line-height: 36px; font-size: 15px;text-align:center; margin-left: 8px;margin-right: 8px;'>请先登录</div>", 
+		    area: ['260px', '120px'],//宽高
+			success: function(layero, index){
+				 
+			}
+		});
+		return false;
+	}
+	
+	
+
+	var div = "<div id='divMessage'></div>";
+	layer.open({
+	    type: 1, 
+	    title:"回复 "+userName,
+	    content: div, //这里content是一个普通的String
+	    moveOut:true,//是否允许拖拽到窗口外
+	    area: ['800px', '500px']//宽高
+
+	});
+	
+	
+	var parameter = "";//URI参数
+	parameter += "&commentId="+commentId;
+	
+	
+	//回复页面
+	get_request(function(value){
+		if(value != ""){
+			$("#divMessage").html(value);
+		}
+	},
+	getBasePath()+"comment_reply.htm?"+parameter+"&timestamp=" + new Date().getTime(), true);
+	
+}
+
+//引用弹出层
+function quoteLayer(commentId,userName){
+	//判断是否已登录
+	var isLogin = document.getElementById("isLogin").value;
+	if(isLogin == "false"){
+		layer.open({
+		    type: 1, 
+		    title:"提示",
+		    content: "<div style='line-height: 36px; font-size: 15px;text-align:center; margin-left: 8px;margin-right: 8px;'>请先登录</div>", 
+		    area: ['260px', '120px'],//宽高
+			success: function(layero, index){
+				 
+			}
+		});
+		return false;
+	}
+
+
+	var div = "<div id='divMessage'></div>";
+	layer.open({
+	    type: 1, 
+	    title:"引用 "+userName,
+	    content: div, //这里content是一个普通的String
+	    moveOut:true,//是否允许拖拽到窗口外
+	    area: ['800px', '500px'],//宽高
+		zIndex:1,
+		
+		cancel: function(index){
+			// 关闭弹出层前移除编辑器,否则会在IE8下输入框失去焦点
+			KindEditor.remove('textarea[id="quoteCommentContent"]');//移除'引用回复'编辑器
+		
+		}
+	});
+
+	var parameter = "";//URI参数
+	parameter += "commentId="+commentId;
+	
+	
+	//引用页面
+	get_request(function(value){
+		if(value != ""){
+			$("#divMessage").html(value);
+		}
+	},
+	getBasePath()+"comment_quote?"+parameter+"&timestamp=" + new Date().getTime(), true);
+	
+}
+</script> 
+
