@@ -176,6 +176,13 @@ html,body{
 	border-bottom:2px solid #2192f8;
 	padding:4px 0;
 }
+.indexModule .head .menu{
+	float:left;
+	display:block;
+	position: relative;
+	margin:5px auto;
+	font-size:20px;
+}
 .indexModule .head .button{
 	float: right;
 }

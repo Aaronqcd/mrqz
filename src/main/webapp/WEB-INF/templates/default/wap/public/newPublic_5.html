@@ -56,8 +56,9 @@
 		<div class="indexModule">
 			<div v-show="show_topic">
 				<div class="head">
+					<div class="menu" @click="tag" ><span class="cms-menu"></span></div>
 					<div class="tagName">{{tagName == '' ?  '全部' : tagName}}</div>
-	
+
 					<div class="button"><mt-button type="primary"  @click.native="addTopicUI();" style="height: 28px;font-size: 16px;">发表话题</mt-button></div>
 					
 				</div>
@@ -173,11 +174,17 @@
 				</div>
 			</div>
 			<!-- 标签选择 -->
-			<mt-popup v-model="popup_tag" position="bottom" style="width: 100%; height: 70%;">
-				<mt-picker :slots="tagSlots" @change="onTagChange" value-key="name" ></mt-picker>
-				<mt-tabbar fixed style='height:40px;margin-left: 3px;margin-right: 3px;'>
-					<mt-button type="primary" size="large" @click.native="popup_tag = false" >确定</mt-button> 
-				</mt-tabbar>
+			<mt-popup v-model="popup_tag" position="bottom" style="width: 100%; height: 60%;">
+				<div ref="tagScroll" class="tagModule">
+					<div class="box" >
+						<div class="tagList" >
+							<div>
+								<router-link :to="{path: '/index'}"  :class="selectedTagId == '' ? 'selected' :''" @click.native="popup_tag = false" >全部</router-link>
+								<router-link v-for="(tag,index) in tagList" :to="{path: '/index', query: {tagId: tag.id}}" :class="selectedTagId == tag.id ? 'selected' :''" @click.native="popup_tag = false" >{{tag.name}}</router-link>
+							</div>
+						</div>
+					</div>
+				</div>
 			</mt-popup>
 		</div>
 		<bottomtab-component></bottomtab-component>
@@ -1957,23 +1964,6 @@
 <!-- 公共模块 -->
 <template id="bottomTab-template">
 	<div>
-		<!-- 标签 -->
-		<mt-popup v-model="popup_tag" position="bottom" style="width: 100%; height: 60%;">
-			<div ref="tagScroll" class="tagModule">
-				<div class="box" >
-					
-			        <div class="tagList" >
-			            <div>
-			            	<router-link :to="{path: '/index'}"  :class="selectedTagId == '' ? 'selected' :''" @click.native="popup_tag = false" >全部</router-link>     
-		                	
-		                	<router-link v-for="(tag,index) in tagList" :to="{path: '/index', query: {tagId: tag.id}}" :class="selectedTagId == tag.id ? 'selected' :''" @click.native="popup_tag = false" >{{tag.name}}</router-link>            
-			            
-			            </div> 
-			        </div> 
-				</div>
-			</div>
-		</mt-popup>
-		
 		<!-- 底部选项卡 -->
 		<mt-tabbar  v-model="bottomTab" @click.native="selected" fixed style="height:45px;">
 			<mt-tab-item id="index">

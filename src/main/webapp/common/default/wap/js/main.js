@@ -166,6 +166,7 @@ var index_component = Vue.extend({
 				}
 			],
 			topicEditor:'',//富文本编辑器
+			selectedTagId :'',//已选中标签Id
 		};
 	},
 	
@@ -280,11 +281,19 @@ var index_component = Vue.extend({
 							if(_self.tagSlots[0].values == null || _self.tagSlots[0].values.length == 0){//第一次打开时设置值
 								_self.tagSlots[0].values = tagList;
 							}
-							
 						}
 					}
 				}
 			});
+		},
+		tag : function tag(event) {
+			//全部标签
+			this.popup_tag = true;
+			this.queryTag();
+			var tagId = getUrlParam("tagId");//当前标签
+			if(tagId != null){
+				this.selectedTagId = tagId;
+			}
 		},
 		//发表话题界面
 		addTopicUI : function() {
