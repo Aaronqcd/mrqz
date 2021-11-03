@@ -138,6 +138,7 @@ var index_component = Vue.extend({
 			show_topic:true,//显示话题页
 			show_editor:false,//显示话题富文本编辑器
 			popup_tag : false, //'标签选择'弹出层
+            popup_newTag: false,
 			topicTitle:'',//发表话题标题
 			topicTagId:'',//发表话题标签Id
 			topicTagName:'',//发表话题标签名称
@@ -564,7 +565,7 @@ var index_component = Vue.extend({
 		
 		//显示标签选择
 		displayTag : function(event) {
-			this.popup_tag = true;
+			this.popup_newTag = true;
 			
 			//查询标签
 			this.queryTag();
