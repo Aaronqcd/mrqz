@@ -186,6 +186,12 @@ html,body{
 .indexModule .head .button{
 	float: right;
 }
+.indexModule .head .button .search{
+	font-size:20px;
+	float:left;
+	margin:5px auto;
+	padding-right: 20px
+}
 .indexModule .topicList {margin-top: 1px;}
 .indexModule .topicList .item {position: relative;margin-top: 2px;}
 .indexModule .topicList .item .avatarBox{

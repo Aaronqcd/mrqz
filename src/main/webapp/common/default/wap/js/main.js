@@ -296,6 +296,11 @@ var index_component = Vue.extend({
 				this.selectedTagId = tagId;
 			}
 		},
+		search: function search() {
+			this.$router.push({
+				path : '/search'
+			});
+		},
 		//发表话题界面
 		addTopicUI : function() {
 			var _self = this;

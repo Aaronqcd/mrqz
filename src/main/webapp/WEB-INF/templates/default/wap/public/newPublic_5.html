@@ -58,8 +58,10 @@
 				<div class="head">
 					<div class="menu" @click="tag" ><span class="cms-menu"></span></div>
 					<div class="tagName">{{tagName == '' ?  '全部' : tagName}}</div>
-
-					<div class="button"><mt-button type="primary"  @click.native="addTopicUI();" style="height: 28px;font-size: 16px;">发表话题</mt-button></div>
+					<div class="button">
+						<div class="search" @click="search"><span class="cms-search"></span></div>
+						<mt-button type="primary"  @click.native="addTopicUI();" style="height: 28px;font-size: 16px;">发表话题</mt-button>
+					</div>
 					
 				</div>
 				<div class="topicList">
@@ -1978,12 +1980,12 @@
 			</mt-tab-item>
 			<mt-tab-item id="tag">
 			    <span class="cms-tag" style="font-size: 22px;"></span>
-			    <div style="margin-top: 2px;">标签</div>
+			    <div style="margin-top: 2px;">功能</div>
 			</mt-tab-item>
-			<mt-tab-item id="search">
+			<!--<mt-tab-item id="search">
 			    <span class="cms-search" style="font-size: 22px;"></span> 
 			    <div style="margin-top: 2px;">搜索</div>
-			</mt-tab-item>
+			</mt-tab-item>-->
 			<mt-tab-item id="mine">
 			    <span class="cms-user" style="font-size: 22px;"></span><span class="badge" style="position: absolute;" v-show="$store.state.allMessage_badge"></span>
 			    <div style="margin-top: 2px;">我的</div>
